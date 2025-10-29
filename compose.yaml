@@ -2,8 +2,24 @@ services:
   postgres:
     image: 'postgres:latest'
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
+      - 'POSTGRES_DB=dkb_test'
       - 'POSTGRES_USER=myuser'
+      - 'POSTGRES_PASSWORD=secret'
+    volumes:
+      - ./postgis-data:/var/lib/postgresql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db-01.sql
     ports:
-      - '5432'
+      - 6464:5432
+  redis:
+    image: redis:alpine
+    command: redis-server --save 20 1 --loglevel warning
+    ports:
+        - 6399:6379
+    volumes:
+        - redis_data:/data
+    restart: always
+volumes:
+    redis_data:
+networks:
+    local_network:
+        driver: bridge
