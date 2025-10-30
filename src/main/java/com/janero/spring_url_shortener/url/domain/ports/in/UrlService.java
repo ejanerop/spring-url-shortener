@@ -8,4 +8,6 @@ public interface UrlService {
 
     Url findByKey(String key);
 
+    String findUrlByKey(String key);
+
 }

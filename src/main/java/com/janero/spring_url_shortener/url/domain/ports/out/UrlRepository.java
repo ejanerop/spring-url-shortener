@@ -8,4 +8,6 @@ public interface UrlRepository {
 
     Url findByKey(String key);
 
+    String findUrlByKey(String key);
+
 }

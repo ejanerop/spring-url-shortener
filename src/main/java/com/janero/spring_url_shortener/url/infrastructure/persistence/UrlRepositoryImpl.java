@@ -28,4 +28,9 @@ public class UrlRepositoryImpl implements UrlRepository {
         return repo.findById(key).map(mapper::toModel).orElseThrow(NoSuchElementException::new);
     }
 
+    @Override
+    public String findUrlByKey(String key) {
+        return repo.findUrlByKey(key).orElseThrow(NoSuchElementException::new);
+    }
+
 }
