@@ -10,4 +10,8 @@ public interface UrlRepository {
 
     String findUrlByKey(String key);
 
+    boolean existByKey(String key);
+
+    void deleteByKey(String key);
+
 }

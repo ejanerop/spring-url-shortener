@@ -7,7 +7,7 @@ import com.janero.spring_url_shortener.url.infrastructure.persistence.jpa.entity
 
 public interface UrlJpaRepository extends JpaRepository<UrlEntity, String> {
 
-    @Query("SELECT u.url FROM UrlEntity WHERE u.key = :key")
+    @Query("SELECT u.url FROM UrlEntity u WHERE u.key = :key")
     Optional<String> findUrlByKey(String key);
 
 }

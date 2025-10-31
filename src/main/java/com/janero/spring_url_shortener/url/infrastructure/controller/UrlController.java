@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.janero.spring_url_shortener.shared.domain.exception.EncodeException;
 import com.janero.spring_url_shortener.url.domain.ports.in.UrlService;
 import com.janero.spring_url_shortener.url.infrastructure.controller.mapper.UrlControllerMapper;
 import com.janero.spring_url_shortener.url.infrastructure.controller.request.UrlRequest;
@@ -32,7 +33,8 @@ public class UrlController {
     }
 
     @PostMapping("/shorten")
-    public ResponseEntity<UrlResponse> shorten(@RequestBody @Validated UrlRequest request) {
+    public ResponseEntity<UrlResponse> shorten(@RequestBody @Validated UrlRequest request)
+            throws EncodeException {
         return ResponseEntity.ok().body(mapper.toResponse(service.shorten(request.getUrl())));
     }
 

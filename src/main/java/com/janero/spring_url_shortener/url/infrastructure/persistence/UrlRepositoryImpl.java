@@ -1,6 +1,7 @@
 package com.janero.spring_url_shortener.url.infrastructure.persistence;
 
 import java.util.NoSuchElementException;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
 import com.janero.spring_url_shortener.url.domain.model.Url;
 import com.janero.spring_url_shortener.url.domain.ports.out.UrlRepository;
@@ -8,6 +9,8 @@ import com.janero.spring_url_shortener.url.infrastructure.persistence.jpa.UrlJpa
 import com.janero.spring_url_shortener.url.infrastructure.persistence.jpa.mapper.UrlEntityMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
+import static com.janero.spring_url_shortener.shared.infrastructure.config.CacheConfig.URL_KEY_CACHE;
 
 @Component
 @RequiredArgsConstructor
@@ -31,6 +34,18 @@ public class UrlRepositoryImpl implements UrlRepository {
     @Override
     public String findUrlByKey(String key) {
         return repo.findUrlByKey(key).orElseThrow(NoSuchElementException::new);
+    }
+
+    @Override
+    public boolean existByKey(String key) {
+        return repo.existsById(key);
+    }
+
+    @Override
+    @Transactional
+    @CacheEvict(value = URL_KEY_CACHE)
+    public void deleteByKey(String key) {
+        repo.deleteById(key);
     }
 
 }
