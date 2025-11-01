@@ -8,9 +8,9 @@ public interface UrlService {
 
     Url shorten(String url) throws EncodeException;
 
-    Url findByKey(String key);
+    Url findByKey(String key) throws KeyNotFoundException;
 
-    String findUrlByKey(String key);
+    String findUrlByKey(String key) throws KeyNotFoundException;
 
     void deleteByKey(String key) throws KeyNotFoundException;
 

@@ -2,9 +2,11 @@ package com.janero.spring_url_shortener.url.domain.model;
 
 import java.time.ZonedDateTime;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 @SuppressWarnings("java:S1700")
 public class Url {
 

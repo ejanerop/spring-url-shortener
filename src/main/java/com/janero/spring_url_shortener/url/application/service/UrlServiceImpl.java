@@ -1,5 +1,6 @@
 package com.janero.spring_url_shortener.url.application.service;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import com.janero.spring_url_shortener.shared.domain.exception.EncodeException;
@@ -24,31 +25,31 @@ public class UrlServiceImpl implements UrlService {
     public Url shorten(String url) throws EncodeException {
         String key;
         int retries = 0;
+
         do {
             key = Base64Encoder.encode(url);
             retries++;
         } while (repo.existByKey(key) && retries <= MAX_RETRIES);
 
-        if (key.isEmpty())
+        if (repo.existByKey(key))
             throw new EncodeException("Can't generate key");
-        Url toInsert = new Url();
-        toInsert.setKey(key);
-        toInsert.setUrl(url);
-        return repo.save(toInsert);
+
+        return repo.save(Url.builder().key(key).url(url).build());
     }
 
     @Override
-    public Url findByKey(String key) {
+    public Url findByKey(String key) throws KeyNotFoundException {
         return repo.findByKey(key);
     }
 
     @Override
     @Cacheable(value = URL_KEY_CACHE, keyGenerator = "keyGenerator")
-    public String findUrlByKey(String key) {
+    public String findUrlByKey(String key) throws KeyNotFoundException {
         return repo.findUrlByKey(key);
     }
 
     @Override
+    @CacheEvict(value = URL_KEY_CACHE)
     public void deleteByKey(String key) throws KeyNotFoundException {
         if (!repo.existByKey(key))
             throw new KeyNotFoundException("Key not found");

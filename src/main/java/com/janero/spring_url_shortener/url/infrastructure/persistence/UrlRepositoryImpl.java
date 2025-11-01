@@ -1,8 +1,8 @@
 package com.janero.spring_url_shortener.url.infrastructure.persistence;
 
-import java.util.NoSuchElementException;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
+import com.janero.spring_url_shortener.shared.domain.exception.KeyNotFoundException;
 import com.janero.spring_url_shortener.url.domain.model.Url;
 import com.janero.spring_url_shortener.url.domain.ports.out.UrlRepository;
 import com.janero.spring_url_shortener.url.infrastructure.persistence.jpa.UrlJpaRepository;
@@ -27,13 +27,14 @@ public class UrlRepositoryImpl implements UrlRepository {
     }
 
     @Override
-    public Url findByKey(String key) {
-        return repo.findById(key).map(mapper::toModel).orElseThrow(NoSuchElementException::new);
+    public Url findByKey(String key) throws KeyNotFoundException {
+        return repo.findById(key).map(mapper::toModel)
+                .orElseThrow(() -> new KeyNotFoundException("Key not found"));
     }
 
     @Override
-    public String findUrlByKey(String key) {
-        return repo.findUrlByKey(key).orElseThrow(NoSuchElementException::new);
+    public String findUrlByKey(String key) throws KeyNotFoundException {
+        return repo.findUrlByKey(key).orElseThrow(() -> new KeyNotFoundException("Key not found"));
     }
 
     @Override

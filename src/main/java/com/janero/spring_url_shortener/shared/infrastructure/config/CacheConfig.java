@@ -34,7 +34,7 @@ public class CacheConfig {
 
     @Bean
     KeyGenerator keyGenerator() {
-        return (target, method, params) -> target + method.getName() + Arrays.toString(params);
+        return (target, method, params) -> target + Arrays.toString(params);
     }
 
 }
