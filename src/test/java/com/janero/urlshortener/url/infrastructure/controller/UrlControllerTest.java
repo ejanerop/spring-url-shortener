@@ -9,7 +9,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.janero.urlshortener.shared.domain.exception.EncodeException;
@@ -21,7 +20,6 @@ import com.janero.urlshortener.url.infrastructure.controller.request.UrlRequest;
 import com.janero.urlshortener.url.infrastructure.controller.response.UrlResponse;
 import jakarta.servlet.http.HttpServletResponse;
 
-@SpringBootTest
 class UrlControllerTest {
 
     private UrlService service;
