@@ -1,4 +1,4 @@
-package com.janero.spring_url_shortener;
+package com.janero.urlshortener;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
