@@ -39,5 +39,5 @@ class Base64EncoderTest {
 
         assertEquals(iterations, salts.size(), "expected all generated salts to be unique across iterations");
     }
-
+    
 }
