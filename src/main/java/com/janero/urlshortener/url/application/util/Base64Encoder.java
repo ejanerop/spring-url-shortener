@@ -3,15 +3,15 @@ package com.janero.urlshortener.url.application.util;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Base64;
-import java.util.Random;
 import com.janero.urlshortener.shared.domain.exception.EncodeException;
 
 public class Base64Encoder {
 
     private Base64Encoder() {}
 
-    private static Random random = new Random();
+    private static SecureRandom random = new SecureRandom();
 
     public static String encode(String url) throws EncodeException {
         try {
