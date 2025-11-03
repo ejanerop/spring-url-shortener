@@ -56,17 +56,24 @@ services:
     restart: unless-stopped
     ports:
       - "8080:8080"
-    environment:
-      # Example environment variables (adjust as your application reads them)
-      SPRING_PROFILES_ACTIVE: "prod"
-      SPRING_DATASOURCE_URL: "jdbc:h2:file:/data/urlshortener;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE"
-      SPRING_DATASOURCE_USERNAME: sa
-      SPRING_DATASOURCE_PASSWORD:
+    env_file: "deploy.env"
     volumes:
       - urlshortener-data:/data
 
 volumes:
   urlshortener-data:
+```
+
+2. Create a `deploy.env` file with the following properties:
+
+```properties
+SPRING_PROFILES_ACTIVE=prod
+# Fill these properties 
+DB_URL=
+DB_USER=
+DB_PASSWORD=
+REDIS_HOST=
+REDIS_PORT=
 ```
 
 2. Start the service:
@@ -76,7 +83,7 @@ docker compose up -d
 (If using older Docker Compose, run `docker-compose up -d`.)
 
 3. Verify:
-- Swagger documentation: `http://localhost:8080/`
+- Swagger documentation: `http://localhost:8080/swagger-ui/index.html`
 
 Notes:
 - If you prefer a different database (MySQL/Postgres), update the environment variables or compose file to include a database service and set SPRING_DATASOURCE_* accordingly.
